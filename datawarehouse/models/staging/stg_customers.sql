@@ -1,21 +1,21 @@
 WITH
 
-SOURCE AS (
+source AS (
 
     SELECT * FROM {{ source('ecom', 'raw_customers') }}
 
 ),
 
-RENAMED AS (
+renamed AS (
 
     SELECT
 
         ----------  ids
-        ID AS CUSTOMER_ID,
-        NAME AS CUSTOMER_NAME
+        id AS customer_id,
+        name AS customer_name
 
-    FROM SOURCE
+    FROM source
 
 )
 
-SELECT * FROM RENAMED
+SELECT * FROM renamed

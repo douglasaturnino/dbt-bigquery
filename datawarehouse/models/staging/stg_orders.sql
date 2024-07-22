@@ -1,6 +1,6 @@
 WITH
 
-SOURCE AS (
+source AS (
 
 -- Usando a macro dbt_utils.union_relations para combinar as tabelas raw_orders_2016 e raw_orders_2017
     {{ dbt_utils.union_relations(
@@ -12,28 +12,28 @@ SOURCE AS (
 
 ),
 
-RENAMED AS (
+renamed AS (
 
     SELECT
 
         ----------  ids
-        ID AS ORDER_ID,
-        STORE_ID AS LOCATION_ID,
-        CUSTOMER AS CUSTOMER_ID,
+        id AS order_id,
+        store_id AS location_id,
+        customer AS customer_id,
 
         ---------- numerics
-        SUBTOTAL AS SUBTOTAL_CENTS,
-        TAX_PAID AS TAX_PAID_CENTS,
-        ORDER_TOTAL AS ORDER_TOTAL_CENTS,
-        {{ cents_to_dollars('subtotal') }} AS SUBTOTAL,
-        {{ cents_to_dollars('tax_paid') }} AS TAX_PAID,
-        {{ cents_to_dollars('order_total') }} AS ORDER_TOTAL,
+        subtotal AS subtotal_cents,
+        tax_paid AS tax_paid_cents,
+        order_total AS order_total_cents,
+        {{ cents_to_dollars('subtotal') }} AS subtotal,
+        {{ cents_to_dollars('tax_paid') }} AS tax_paid,
+        {{ cents_to_dollars('order_total') }} AS order_total,
 
         ---------- timestamps
-        {{ dbt.date_trunc('day','ordered_at') }} AS ORDERED_AT
+        {{ dbt.date_trunc('day','ordered_at') }} AS ordered_at
 
-    FROM SOURCE
+    FROM source
 
 )
 
-SELECT * FROM RENAMED
+SELECT * FROM renamed
